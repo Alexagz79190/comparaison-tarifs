@@ -40,7 +40,7 @@ if dfList != [] :
     df = df.dropna(subset=["Ref OEM"])
     df['Ref OEM'] = df['Ref OEM'].str.split("|")
     df = df.explode('Ref OEM').reset_index(drop=True)
-    df['Ref OEM'] = df['Ref OEM'].map(lambda x: x.strip())
+    df['Ref OEM'] = df['Ref OEM'].map(lambda x: str(x).strip())
     df['Ref OEM'] = df['Ref OEM'].replace('', np.nan)
     df = df.dropna(subset=['Ref OEM'])
     df = df.sort_values(by=["Prix"])
@@ -49,4 +49,5 @@ if dfList != [] :
     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer :
         df.to_excel(writer, sheet_name='Résultat comparaison', index=False)
         writer.close()
+
         st.download_button(label="Télécharger le résultat", data=buffer.getvalue(), file_name = "résultat comparaison prix.xlsx", mime="application/vnd.ms-excel")
