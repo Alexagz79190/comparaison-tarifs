@@ -11,7 +11,7 @@ import io
 import numpy as np
 
 def traitementFichier(file) :
-    df = pd.read_excel(file)
+    df = pd.read_excel(file, dtype="object")
     df.insert(3, "fichier", file.name)
     df["Prix"] = df["Prix"].astype('float64')
     return df
@@ -51,3 +51,4 @@ if dfList != [] :
         writer.close()
 
         st.download_button(label="Télécharger le résultat", data=buffer.getvalue(), file_name = "résultat comparaison prix.xlsx", mime="application/vnd.ms-excel")
+
